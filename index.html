@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CVE 漏洞列表</title>
+  <!-- 引入外部资源 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <!-- 配置 Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3B82F6',
+            critical: '#EF4444',
+            high: '#F97316',
+            medium: '#EAB308',
+            low: '#10B981',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .table-shadow {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      }
+      .hover-row {
+        @apply transition-colors hover:bg-gray-50;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+  <!-- 页面头部 -->
+  <header class="bg-white shadow-sm">
+    <div class="container mx-auto px-4 py-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="flex items-center mb-4 md:mb-0">
+          <i class="fa fa-shield text-primary text-3xl mr-3"></i>
+          <h1 class="text-2xl font-bold">CVE 漏洞列表</h1>
+        </div>
+        <div class="w-full md:w-64">
+          <div class="relative">
+            <input 
+              type="text" 
+              placeholder="搜索 CVE 编号或程序名称..." 
+              class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+              id="search-input"
+            >
+            <i class="fa fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主要内容区 -->
+  <main class="container mx-auto px-4 py-8">
+    <!-- 筛选标签 -->
+    <div class="flex flex-wrap gap-2 mb-6">
+      <button class="px-3 py-1 bg-primary text-white rounded-full text-sm font-medium filter-btn" data-filter="all">
+        全部类型
+      </button>
+      <button class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-colors filter-btn" data-filter="远程代码执行">
+        远程代码执行
+      </button>
+      <button class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-colors filter-btn" data-filter="缓冲区溢出">
+        缓冲区溢出
+      </button>
+      <button class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-colors filter-btn" data-filter="权限提升">
+        权限提升
+      </button>
+      <button class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-colors filter-btn" data-filter="信息泄露">
+        信息泄露
+      </button>
+      <button class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full text-sm font-medium transition-colors filter-btn" data-filter="注入攻击">
+        注入攻击
+      </button>
+    </div>
+
+    <!-- CVE 列表表格 -->
+    <div class="bg-white rounded-lg table-shadow overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-200">
+        <!-- 表头 -->
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              编号
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              CVE ID
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              受影响程序
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              漏洞类型
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              风险等级
+            </th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              发布日期
+            </th>
+          </tr>
+        </thead>
+        
+        <!-- 表格内容 -->
+        <tbody class="bg-white divide-y divide-gray-200" id="cve-table-body">
+          <!-- 漏洞条目 1 -->
+          <tr class="hover-row">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 serial-number">
+              1
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary">
+                <a href="CVE-2025-63929.html" class="hover:underline" target="_self">
+    CVE-2025-63927
+  </a>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 program-name">
+              IEC104
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 vulnerability-type">
+              Denial of Service
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-critical/10 text-critical">
+                --
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              2025-00-00
+            </td>
+          </tr>
+          
+          <!-- 漏洞条目 2 -->
+          <tr class="hover-row">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 serial-number">
+              2
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary">
+          
+  <a href="CVE-2025-63929.html" class="hover:underline" target="_self">
+    CVE-2025-63929
+  </a>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 program-name">
+              IEC104
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 vulnerability-type">
+              Denial of Service
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-high/10 text-high">
+                --
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              2025-00-00
+            </td>
+          </tr>
+          
+          <!-- 漏洞条目 3 -->
+          <tr class="hover-row">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 serial-number">
+              3
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary">
+              CVE-2025-XXXX
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 program-name">
+              Microsoft Windows 11
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 vulnerability-type">
+              权限提升
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-high/10 text-high">
+                高
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              2025-02-10
+            </td>
+          </tr>
+          
+          <!-- 漏洞条目 4 -->
+          <tr class="hover-row">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 serial-number">
+              4
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary">
+              CVE-2025-XXXX
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 program-name">
+              WordPress 6.4.3
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 vulnerability-type">
+              信息泄露
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-medium/10 text-medium">
+                中
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              2025-03-05
+            </td>
+          </tr>
+          
+          <!-- 漏洞条目 5 -->
+          <tr class="hover-row">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 serial-number">
+              5
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary">
+              CVE-2025-XXXX
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 program-name">
+              MySQL 8.0.34
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 vulnerability-type">
+              SQL 注入
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-medium/10 text-medium">
+                中
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              2025-03-18
+            </td>
+          </tr>
+          
+          <!-- 漏洞条目 6 -->
+          <tr class="hover-row">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 serial-number">
+              6
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary">
+              CVE-2025-XXXX
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 program-name">
+              Python 3.11.7
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 vulnerability-type">
+              输入验证错误
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-low/10 text-low">
+                低
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+              2025-04-02
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="bg-white border-t border-gray-200 mt-12 py-6">
+    <div class="container mx-auto px-4 text-center text-gray-500 text-sm">
+      <p>© 2025 CVE 漏洞列表 | 最后更新: 2025-04-10</p>
+    </div>
+  </footer>
+
+  <!-- 交互功能 -->
+  <script>
+    // 保持编号自增（即使在筛选状态下）
+    function updateSerialNumbers() {
+      const visibleRows = document.querySelectorAll('#cve-table-body tr:not([style="display: none;"])');
+      visibleRows.forEach((row, index) => {
+        row.querySelector('.serial-number').textContent = (index + 1).toString();
+      });
+    }
+
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('search-input');
+      const rows = document.querySelectorAll('#cve-table-body tr');
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      
+      // 搜索功能
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase().trim();
+        
+        rows.forEach(row => {
+          const cveId = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+          const program = row.querySelector('.program-name').textContent.toLowerCase();
+          
+          const isMatch = cveId.includes(searchTerm) || program.includes(searchTerm);
+          row.style.display = isMatch ? '' : 'none';
+        });
+        
+        updateSerialNumbers(); // 更新编号
+      });
+      
+      // 类型筛选
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          // 更新按钮样式
+          filterButtons.forEach(btn => {
+            btn.classList.remove('bg-primary', 'text-white');
+            btn.classList.add('bg-gray-100', 'hover:bg-gray-200');
+          });
+          this.classList.remove('bg-gray-100', 'hover:bg-gray-200');
+          this.classList.add('bg-primary', 'text-white');
+          
+          const filterText = this.getAttribute('data-filter');
+          
+          // 筛选逻辑
+          rows.forEach(row => {
+            const type = row.querySelector('.vulnerability-type').textContent;
+            
+            if (filterText === 'all' || type.includes(filterText)) {
+              row.style.display = '';
+            } else {
+              row.style.display = 'none';
+            }
+          });
+          
+          updateSerialNumbers(); // 更新编号
+        });
+      });
+    });
+  </script>
+</body>
+</html>
